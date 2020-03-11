@@ -23,7 +23,7 @@ Format: textovna vsebine pogovorov/objave, bolj specificno na /Coronavirus reddi
 Vir podatkov: Gtrends, API: Pytrends
 Format: Geo_lokacija: iskanost v razmerju z vsemi iskanji
 
-Vir podatkov: Twitter, API: twint
+Vir podatkov: Twitter, API: twint (python module)
 Format: Objave, lokacije oseb, katerim pripadajo objave
 
 Vir podatkov: kaggle - https://www.kaggle.com/imdevskp/corona-virus-report
