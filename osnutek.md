@@ -27,3 +27,7 @@ Vir podatkov: Twitter, API: twint (python module)
 Format: Objave, lokacije oseb, katerim pripadajo objave
 
 Vir podatkov: kaggle - https://www.kaggle.com/imdevskp/corona-virus-report
+
+V primeru primerjav z drugimi virusi:
+https://www.kaggle.com/imdevskp/ebola-outbreak-20142016-complete-dataset
+https://www.kaggle.com/imdevskp/sars-outbreak-2003-complete-dataset
