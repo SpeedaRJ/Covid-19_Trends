@@ -804,27 +804,9 @@ data2
 </table>
 <p>5466 rows × 6 columns</p>
 </div>
-
-
-
-
-```python
-fig = px.choropleth(data2, 
-                    locations="Country/Region", 
-                    locationmode = "country names",
-                    color="Confirmed",
-                    color_continuous_scale="Viridis",
-                    hover_name="Country/Region", 
-                    animation_frame="Date"
-                   )
-
-fig.update_layout(
-    title_text = 'Spread of Coronavirus',
-    title_x = 0.5,
-    geo=dict(
-        showframe = False,
-        showcoastlines = False,
-    ))
-    
-fig.show()
-```
+# Spread of Coronavirus
+![Spread of Coronavirus](./images/SpreadOfCoronavirus.png)
+# Spread of Information - Google Trends
+![Spread of Information](./images/GoogleTrendsCorona.png)
+# Deaths - Coronavirus
+![Deaths of Coronavirus](./images/DeathsCoronavirus.png)
