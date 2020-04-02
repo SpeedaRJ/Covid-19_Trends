@@ -595,15 +595,15 @@ Najbolj osnovna statistika, ki jo lahko pregledamo je povprečno število všeč
 Dobimo rezultate da je povprečje všečkov na tweet 15391.429 s standardnim odklonom 43243.936, za retweet-e pa dobimo rezultate da je povprečnje na tweet 5.115 s standardnim odklonom 138.549. Iz tega vidimo da je pri obeh velik standardni odklon. Seveda je to tudi nekako pričakovano saj imajo različni računi različno število sledilcev in posledično različno "prometa", ki gre čez njihov račun. Lahko razberemo, da je takih, ki imajo manj sledilcev veliko več kot pa teh z velikim številom le teh. Takih podatkov kot je število sledilcev, ali je račun potrjen itd. v naši bazi ne bomo imeli, je pa zanimivo razmisliti kako vplivajo na podatke.
 
 Podatke lahko predstavimo kot da gre za normalno porazdelitev. Če to storimo lahko bodimo nasledne grafe.
-![3graphs.png](attachment:3graphs.png)
+![3graphs.png](https://github.com/literalboredom/PR20SBRJVHMTAMR/tree/master/images/3graphs.png)
 Vidimo da število tweetov glede na število všečkov, praktično logaritmično pada z večjim število všečkov. To je uvidno tako v tweetih, ki imajo okoli 4000 všečkovi in manj (zeleni graf) kot na tistih, ki imajo okoli 40000 všečkov in manj (modri graf). Pri vseh treh percentilih za katere smo naredili graf po normalni porazdelitvi, torej 75-percentil, 50-percentil in 40-percentil, se opazi enak vzorec padanja števila tweetov z večjih številom všečkov. 
 
 Zanima nas tudi število všečkov in retweetov glede na posamezni dan, tako lahko nekako vidimo kako je potek "promet".
-![promet.png](attachment:promet.png)
+![promet.png](https://github.com/literalboredom/PR20SBRJVHMTAMR/tree/master/images/promet.png)
 Če "promet" po določenem dnevu opredelimo kot seštevek všečkov in retweetov, vidimo da je bilo največ prometa okoli desetega ali pa enajstega marca. Ker bodo te dnevi prisotni tudi v naši bazi, bomo lahko na podlagi tega naredili primerjave med načinon zajemanja podatkov, ki smo ga uporabili mi, in tem, ki so ga uporabili za Kaggle baze.
 
 Ker bomo v naših podatkih pregledovali tudi tweete glede na lokacije, nas zanima, kako so loakcije razporejene v Kaggle bazah. Kar nam vrne spodnji graf.
-![locations.png](attachment:locations.png)
+![locations.png](https://github.com/literalboredom/PR20SBRJVHMTAMR/tree/master/images/locations.png)
 Iz vseh 114000 tweetov, ki smo jih vzeli za vzorec, jih je le 5976 imelo navedeno lokacijo. Izmed teh 5976 tweetov dobimo 111 različnih držav. Te smo za potrebe grafa omejili na tiste, ki so imeli več kot 30 tweetov v obdobju od prvega do dvaindvajsetega marca. Izkaže se da je takih le 24. Izmed teh 24 se vidi da Amerika množično prevladuje, sledita ji še Kanda in Velika Britanija, torej še dve angleško govoreči državi, ampak Ameriki nista blizu. To je podatek, ki ga bomo tudi mi lahko spremljaji v naši bazi, in ga primerjali s podatki, ki smo jih dobili iz Kaggle-ove baze. 
 
 Za zaključek, lahko te podatke še simplistično pregledamo na podlagi vsebine samega tweeta. Zanima nas naprimer koliko ljudje govorijo o obolelih, o novih primerih, o smrtih in ozdravelih. Iz teh podatkov dobimo nasledni graf. 
