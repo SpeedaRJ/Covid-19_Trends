@@ -9,7 +9,533 @@ Radi bi razdelili napredek na tri glavne faze, vsaka od njih je vzela doloćen �
 ## 1. faza: Webscrape API za socialne medije
 Po doloćenih ovirah smo se odloćili za Twitter, Reddit ter GTrends, saj so se nam zdeli najbolj zanimivi. Moramo izpostaviti, da taki API-ji, ki ponujajo moznost pridobivanja tekstovne vsebine objav so precej omejeni s klici, poleg tega, smo pa morali to prilagoditi ćasovnem intervalu za nekaj mesecov nazaj, zato je ta faza bila tudi najdaljša.
 
-### Reddit - https://pushshift.io/
+# Reddit - https://pushshift.io/
+Gledali smo zgolj primerne subreddit-e, ker bi bilo drugaće zbiranje podatkov drastićno predolg proces za namene tega projekta.
+## Analiza podatkov
+Najprej smo pridobljene podatke poslali cez Text Analysis and Sentiment Recognition API-ja, katera bosta opisana nižje, namreć smo želeli malce već ne-tekstovnih podatkov. 
+Pridobimo množico, ki vsebuje:
+Datum, Ocena Komentarja, Ocena Submmissiona, Naslov Submissiona, Text Komentarja
+Ter poleg vseh teh tudi atribute za prisotnost nekaj ćez 150 najpogosteje omenjenih kljućnih besed ter sentimentalno oceno.
+Predprocesiranja in izbira kljućnih besed:
+```Python
+import json
+import glob
+from collections import defaultdict
+import pandas as pd
+import numpy as np
+
+PATH = "./keywords/"
+files = [f for f in glob.glob(PATH + "**/*.json*", recursive=True)]
+list_of_keywords = list()
+for file in files:
+    with open( file ) as json_file:
+        for key, value in json.loads( json_file.read() ).items():
+            list_of_keywords+=value
+
+keyword_count = defaultdict(int)
+for keyword in list_of_keywords:
+    keyword_count[keyword.lower()]+=1
+das = []
+for k,v in {k: v for k, v in sorted(keyword_count.items(), key=lambda item: item[1], reverse=True)}.items():
+    if v >= 100 and not str(k).isdigit():
+        das.append(k)
+```
+Za kljućne besede smo izbrali:
+```
+'coronavirus', 'people',  'questions',  'comments',  'cases',  'one',  'reports',  'videos',  'suggestions',  'images',  'theories',  'daily discussion post',  'virus',  'china',  'italy',  'us',  'government',  'covid',  'country',  'covid-19',  'home',  'masks',  'accounts',  'coronavirus outbreak',  'deaths',  'trump',  'health',  'schools',  'testing',  'everyone',  'message',  'uk',  'action',  'u.s.',  'two',  'symptoms',  'moderators',  'hospital',  'usa',  'pandemic',  'subreddit',  'cdc',  'bot',  'thing',  'countries',  'way',  'sources',  'twitter',  'tests',  'policy',  'world',  'things',  'youtube',  'patients',  'numbers',  'president',  'all',  'number',  'politicians',  'chinese',  'info',  'flu',  'spread',  'case',  'ban',  'rules',  'everything',  'something',  'discussions',  'facebook',  'someone',  'lot',  'south korea',  'professionals',  'state',  'highlights',  'accusations',  'discretion',  'offences',  'attacks',  'repeat offenders',  'pages',  'support resources',  'daily discussion thread',  'advice.',  'giving',  'anyone',  'anything',  'work',  'americans',  'measures',  'hospitals',  'death',  'person',  'point',  'risk',  'nothing',  'europe',  'united states',  'wuhan',  'money',  'italian',  'doctors',  'quarantine',  'population',  'state of emergency',  'test',  'distancing',  'man',  'information',  'article',  'outbreak',  'situation',  'children',  'reason',  'school',  'lockdown',  'source',  'times',  'response',  'restaurants',  'thousands',  'supplies',  'others',  'bars',  'no one',  'kids',  'life',  'area',  'vaccine',  'shit',  'america',  '1 million',  'coronavirus test',  'infections',  'news',  'gatherings',  'herd immunity',  'total',  'france',  'job',  'officials',  'post',  'employees',  'four',  'emergency',  'states',  'coronavirus cases',  'corona',  'experts',  'scientists',  'hands',  'events',  'germany',  'some',  'travel ban',  'link',  'friends',  'british',  'ohio',  'australia',  'disease',  'idea',  'food',  'india',  'nyc',  'many',  'contact',  'wife',  'staff',  'family',  'part',  'more',  'lives',  'spain',  'who',  'crisis',  'place',  'posts',  'nba',  'test kits',  'thanks',  'american',  'flight',  'doctor',  'rome',  'community',  'house',  'economy',  'boomers',  'zero',  'fact',  'order',  'guy',  'icu',  'curve',  'problem',  'sense'
+```
+Po obdelavi dobimo naslednjo podatkovno množico:
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>people</th>
+      <th>coronavirus</th>
+      <th>questions</th>
+      <th>comments</th>
+      <th>cases</th>
+      <th>one</th>
+      <th>reports</th>
+      <th>videos</th>
+      <th>suggestions</th>
+      <th>...</th>
+      <th>economy</th>
+      <th>boomers</th>
+      <th>zero</th>
+      <th>fact</th>
+      <th>order</th>
+      <th>guy</th>
+      <th>icu</th>
+      <th>curve</th>
+      <th>problem</th>
+      <th>sense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9000</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9001</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9002</th>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9003</th>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9004</th>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8995</th>
+      <td>9995</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8996</th>
+      <td>9996</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8997</th>
+      <td>9997</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8998</th>
+      <td>9998</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8999</th>
+      <td>9999</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10000 rows × 199 columns</p>
+</div>
+
+
+
+
+```python
+reddit
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>date</th>
+      <th>comment_score</th>
+      <th>submission_score</th>
+      <th>title</th>
+      <th>text</th>
+      <th>negative</th>
+      <th>neutral</th>
+      <th>positive</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2020-03-16</td>
+      <td>1</td>
+      <td>1</td>
+      <td>#HighRiskCovid19 trending on twitter, people f...</td>
+      <td>Stay safe Ona-Nar! It's really important for e...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2020-03-16</td>
+      <td>1</td>
+      <td>1</td>
+      <td>‘Super spreaders’ could turn gyms into coronav...</td>
+      <td>I feel you, but its only temporary. Get some r...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2020-03-16</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Chinese Billionaire Jack Ma readies first ship...</td>
+      <td>Where is Jeff Bezos? I am looking for an annou...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2020-03-16</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Garcetti orders closures of bars, gyms, theate...</td>
+      <td>Defy the order...how fucked.</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2020-03-16</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Daily Discussion Post - March 15 | Questions, ...</td>
+      <td>gt; Her hospital has yet to see **confirmed**...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9995</th>
+      <td>9995</td>
+      <td>2020-03-12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Pandemic could end by June if enough measures ...</td>
+      <td>Automatic translation [here](https://translate...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9996</th>
+      <td>9996</td>
+      <td>2020-03-12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Madrid's president Ayuso against coronavirus: ...</td>
+      <td>There was a nightclub party in Madrid the mond...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9997</th>
+      <td>9997</td>
+      <td>2020-03-12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Pandemic could end by June if enough measures ...</td>
+      <td>Welcome to r/Coronavirus! We have a very speci...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9998</th>
+      <td>9998</td>
+      <td>2020-03-12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>We’re in Hong Kong where almost everyone is we...</td>
+      <td>Agreed. To say wearing masks is not effective ...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9999</th>
+      <td>9999</td>
+      <td>2020-03-12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>A person who has taken a picture with Trump 3 ...</td>
+      <td>Fuck each and every one of you who are taking ...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10000 rows × 9 columns</p>
+</div>
+
+
+## Priprava podatkov
 Redditov lastni API, ki ponuja poleg agregiranih statistik, tudi moznost pridobivanja vsebin tako-imenovanih 'submission'-ov ter komentarjev. Podatki so skonstruirani na naslednji naćin:
 
 Datum, Ocena Komentarja, Ocena Submmissiona, Naslov Submissiona, Text Komentarja
@@ -52,8 +578,8 @@ while( before>start_epoch ):
 
 
 
-
-# Hitra analiza podatkov o Tweetih iz strani Kaggle
+# Twitter
+## Analiza podatkov o Tweetih iz strani Kaggle
 
 Medtem ko se pripravlja naša baza z Tweeti od 1.1.2020 do 16.3.2020, ki vsebuje vzorec šest tisočih Tweetov iz vsakega dneva, ki omenjajo Koronavirus. Za sprotno poročilo smo se odločili da naredimo hitro analizo na tovrstnih podatkih iz Kaggla, ki jih nato lahko uporabimo za primerjavo kasneje z našimi podatki. V ta namen smo Kagglovo bazo pretvorili v format, ki smo ga izbrali tudi mi za našo bazo: Datum - Lokacija - Tweet - Število všečkov - Število retweetov. Odločili smo se, da nad temi podatki naredimo hitro analizo, tako da imamo neko primerjavo z našimi podatki, kot da dobimo in se seznanimo z vrsto podatkov. Kaggle baza je sicer zgolj za marec, od prvega do dvaindvajsetega, vzeli smo pa prav tako vzorec prvih 6000 Tweetov iz vsake csv datoteke, kjer smo za prvo izbrali 6000 za vsak dan in dobili 114000 tweetov velik vzorec.
 
@@ -89,7 +615,7 @@ tweets["Date"] = [dt.datetime.strptime(tweets["Date"].values[i].split("T")[0], "
 tweets = tweets.groupby("Date").head(6000)
 ```
 
-### Pregled osnovnih statističnih podatkov
+## Pregled osnovnih statističnih podatkov
 
 Najbolj osnovna statistika, ki jo lahko pregledamo je povprečno število všečkov in retweetov na tweet, ter povprečni standardni odklon le teh.
 ```python
