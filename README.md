@@ -716,7 +716,7 @@ plt.bar(["Recovered", "Ill", "New", "Dead", "Death", "Healthy"],[healthy, recove
 ![words.png](attachment:words.png)
 Iz njega lahko vidimo da jih največ (po našem zelo omejenem iskanju) govori o teh, ki so ozdraveli, temu pa sledijo tweeti, ki vsebujejo besedo death. Z hitrim pogledom v podatke vidimo, da gre pri teh tweetih dejansko za avtomatiziran profil, ki objavlja statusne spremembe.
 
-# Priprava naše podatkovne baze
+## Priprava naše podatkovne baze
 
 Našo podatkovno bazo bomo pripravili z pomočjo twitter scrapperja in ne direktno z uporabo Twitter API. Uporabili bomo twint, GitHub modul, ki je namenjen javni uporabi. Ima opcijo iskanja tako po besedah kot po uporabnikih. Koda za samo proces pridobivanja podatkov je bila sledeča:
 ```python
