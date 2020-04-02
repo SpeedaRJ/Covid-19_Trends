@@ -54,11 +54,23 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <th>date</th>
       <th>comment_score</th>
       <th>submission_score</th>
-      <th>title</th>
-      <th>text</th>
       <th>negative</th>
       <th>neutral</th>
       <th>positive</th>
+      <th>people</th>
+      <th>coronavirus</th>
+      <th>questions</th>
+      <th>...</th>
+      <th>economy</th>
+      <th>boomers</th>
+      <th>zero</th>
+      <th>fact</th>
+      <th>order</th>
+      <th>guy</th>
+      <th>icu</th>
+      <th>curve</th>
+      <th>problem</th>
+      <th>sense</th>
     </tr>
   </thead>
   <tbody>
@@ -68,10 +80,22 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-16</td>
       <td>1</td>
       <td>1</td>
-      <td>#HighRiskCovid19 trending on twitter, people f...</td>
-      <td>Stay safe Ona-Nar! It's really important for e...</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -80,11 +104,23 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-16</td>
       <td>1</td>
       <td>1</td>
-      <td>‘Super spreaders’ could turn gyms into coronav...</td>
-      <td>I feel you, but its only temporary. Get some r...</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -92,10 +128,22 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-16</td>
       <td>1</td>
       <td>1</td>
-      <td>Chinese Billionaire Jack Ma readies first ship...</td>
-      <td>Where is Jeff Bezos? I am looking for an annou...</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -104,9 +152,21 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-16</td>
       <td>1</td>
       <td>1</td>
-      <td>Garcetti orders closures of bars, gyms, theate...</td>
-      <td>Defy the order...how fucked.</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -116,14 +176,38 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-16</td>
       <td>1</td>
       <td>1</td>
-      <td>Daily Discussion Post - March 15 | Questions, ...</td>
-      <td>gt; Her hospital has yet to see **confirmed**...</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -140,10 +224,22 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-12</td>
       <td>1</td>
       <td>1</td>
-      <td>Pandemic could end by June if enough measures ...</td>
-      <td>Automatic translation [here](https://translate...</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -152,10 +248,22 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-12</td>
       <td>1</td>
       <td>1</td>
-      <td>Madrid's president Ayuso against coronavirus: ...</td>
-      <td>There was a nightclub party in Madrid the mond...</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -164,10 +272,22 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-12</td>
       <td>1</td>
       <td>1</td>
-      <td>Pandemic could end by June if enough measures ...</td>
-      <td>Welcome to r/Coronavirus! We have a very speci...</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -176,10 +296,22 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-12</td>
       <td>1</td>
       <td>1</td>
-      <td>We’re in Hong Kong where almost everyone is we...</td>
-      <td>Agreed. To say wearing masks is not effective ...</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -188,16 +320,28 @@ Po obdelavi dobimo naslednjo podatkovno množico:
       <td>2020-03-12</td>
       <td>1</td>
       <td>1</td>
-      <td>A person who has taken a picture with Trump 3 ...</td>
-      <td>Fuck each and every one of you who are taking ...</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>10000 rows × 9 columns</p>
 </div>
+
 
 Še statistika podatkovne množice:
 
