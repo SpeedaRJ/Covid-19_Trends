@@ -1,6 +1,7 @@
 # COVID-19 and Social Media
 
-Epidemija COVID-19 se v trenutno razširja v pandemijo. Ljudje so v samoizolaciji, vsi čutimo posledice nekateri direktno, drugi bolj posredno. Projekt smo pričeli s kreiranjem podatkovne množice, ki smo jo transformirali v uporabno obliko. Poleg tega smo uporabili nekatere podatkovne množice iz Kaggle za natančne podatke ter statistike o širjenju okužb, ozdravelih ter smrtnih žrtev.
+Epidemija COVID-19 se razširja v pandemijo. Trenutno smo v samoizolaciji. Vsi čutimo posledice, nekateri direktno, drugi bolj posredno. Upamo, da se stanje čim prej izboljša in da lahko naš projekt v majhni meri k temu prispeva, če tudi le tako da nas ohranja zaposlene in pri zdravi pameti. 
+Projekt smo pričeli s kreiranjem podatkovne množice, ki smo jo transformirali v uporabno obliko. Poleg tega smo uporabili nekatere podatkovne množice iz Kaggle za natančne podatke in statistike o širjenju okužb, ozdravelih ter smrtnih žrtev.
 
 Zadnjih nekaj tednov smo se sestajali preko različnih medijev ter skongruirali 3 različne vire v 3 lastne podatkovne množice. Nato smo z uporabo metod naravnega procesiranja jezika prvotne podatke še nadgradili.
 
@@ -553,7 +554,7 @@ Redditov lastni API, ki ponuja poleg agregiranih statistik, tudi možnost pridob
 Datum, Ocena Komentarja, Ocena Submmissiona, Naslov Submissiona, Text Komentarja
 
 Po zgornjem formatu imamo trenutno podatke od 16. marca do 27. januarja tega leta. 
-Naslednji odsek kode je bil uporabljen za zgradbo te množice, veliko je precej olajšala uporaba modula psaw:
+Naslednji odsek kode je bil uporabljen za zgradbo te množice, delo je precej olajšala uporaba modula psaw:
 ```Python
 from psaw import PushshiftAPI
 import datetime as dt
