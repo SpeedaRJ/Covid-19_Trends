@@ -562,7 +562,7 @@ api = PushshiftAPI()
 start_epoch=int(dt.datetime(2020, 1, 1, 0, 0, 0).timestamp())
 before = int(dt.datetime(2020, 1, 21, 2, 0, 0).timestamp())
 
-
+ 
 cache = 0
 f =  open(r'reddit21.csv', 'w')
 writer = csv.writer(f)
