@@ -46,20 +46,6 @@ Za kljućne besede smo izbrali:
 ```
 Po obdelavi dobimo naslednjo podatkovno množico:
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -354,7 +340,6 @@ Po obdelavi dobimo naslednjo podatkovno množico:
     </tr>
   </tbody>
 </table>
-<p>10000 rows × 199 columns</p>
 </div>
 
 
