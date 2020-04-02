@@ -1,22 +1,22 @@
 # COVID-19 and Social Media
 
-Epidemija COVID-19 se v trenutnem ćasu razširja na pandemijo, ljudje so v samoizolaciji, nekateri trpijo kot direktna posledica, nekateri pa indirektno. Projekt smo pričeli z kreiranjem podatkovne mnozice, katero smo pretransformirali v uporabno obliko, poleg tega, pa smo tudi uporabili nekatere podatkovne mnozice na Kaggle za natanćne statistike širjenja števila okužb, ozdravelih in mrtvih posameznikov.
+Epidemija COVID-19 se v trenutno razširja v pandemijo. Ljudje so v samoizolaciji, vsi čutimo posledice nekateri direktno, drugi bolj posredno. Projekt smo pričeli s kreiranjem podatkovne množice, ki smo jo transformirali v uporabno obliko. Poleg tega smo uporabili nekatere podatkovne množice iz Kaggle za natančne podatke ter statistike o širjenju okužb, ozdravelih ter smrtnih žrtev.
 
-Zadnjih nekaj tednov smo se sestali preko raznih medijev in skongruirali 3 razlićne vire v 3 lastne podatkovne množice ter nato iz njih naredili še tri bolj uporabne, katere so posledica uporabe metod naravnega procesiranja jezika nad prvotnimi množicami.
+Zadnjih nekaj tednov smo se sestajali preko različnih medijev ter skongruirali 3 različne vire v 3 lastne podatkovne množice. Nato smo z uporabo metod naravnega procesiranja jezika prvotne podatke še nadgradili.
 
-Radi bi razdelili napredek na tri glavne faze, vsaka od njih je vzela doloćen ćas, već podrobnosti pa v nadaljnih sekcijah.
+Radi bi razdelili napredek na tri glavne faze, v katerih smo posamezne naloge razdelili med člane skupine. Več podrobnosti v nadaljnih sekcijah.
 
 ## 1. faza: Webscrape API za socialne medije
-Po doloćenih ovirah smo se odloćili za Twitter, Reddit ter GTrends, saj so se nam zdeli najbolj zanimivi. Moramo izpostaviti, da taki API-ji, ki ponujajo moznost pridobivanja tekstovne vsebine objav so precej omejeni s klici, poleg tega, smo pa morali to prilagoditi ćasovnem intervalu za nekaj mesecov nazaj, zato je ta faza bila tudi najdaljša.
+Takoj smo naleteli na oviro, katere podatke lahko pridobimo.  Odločili smo se za Twitter, Reddit ter GTrends, saj so se nam zdeli najbolj zanimivi in dostopni za uporabo njihovih podatkov. Moramo izpostaviti, da so taki API-ji, ki ponujajo možnost pridobivanja tekstovne vsebine objav precej omejeni s klici. Prav tako smo morali to prilagoditi časovnem intervalu za nekaj mesecov nazaj, kar je za socialne medije precej veliko. Posledično je bila ta faza najdaljša.
 
 # Reddit - https://pushshift.io/
-Gledali smo zgolj primerne subreddit-e, ker bi bilo drugaće zbiranje podatkov drastićno predolg proces za namene tega projekta.
+Gledali smo zgolj primerne subreddit-e, ker bi bilo drugače zbiranje podatkov predolg proces za namene tega projekta (če ne celo v splošnem?).
 ## Analiza podatkov
-Najprej smo pridobljene podatke poslali cez Text Analysis and Sentiment Recognition API-ja, katera bosta opisana nižje, namreć smo želeli malce već ne-tekstovnih podatkov. 
-Pridobimo množico, ki vsebuje:
+Najprej smo pridobljene podatke poslali v Text Analysis and Sentiment Recognition API-ja. Želeli smo več ne-tekstovnih podatkov. 
+Izbrali smo si množico, ki vsebuje:
 Datum, Ocena Komentarja, Ocena Submmissiona, Naslov Submissiona, Text Komentarja
-Ter poleg vseh teh tudi atribute za prisotnost nekaj ćez 150 najpogosteje omenjenih kljućnih besed ter sentimentalno oceno.
-Za kljućne besede smo izbrali:
+Ter poleg vseh teh tudi atribute za prisotnost okoli 150 najpogosteje omenjenih ključnih besed ter oceno razpoloženja (sentiment).
+Najpogostejše klučne besede v izbrani podmnožici so bile:
 ```
 'coronavirus', 'people',  'questions',  'comments',  'cases',  'one',  'reports',  'videos',  'suggestions',  'images',  'theories',  'daily discussion post',  'virus',  'china',  'italy',  'us',  'government',  'covid',  'country',  'covid-19',  'home',  'masks',  'accounts',  'coronavirus outbreak',  'deaths',  'trump',  'health',  'schools',  'testing',  'everyone',  'message',  'uk',  'action',  'u.s.',  'two',  'symptoms',  'moderators',  'hospital',  'usa',  'pandemic',  'subreddit',  'cdc',  'bot',  'thing',  'countries',  'way',  'sources',  'twitter',  'tests',  'policy',  'world',  'things',  'youtube',  'patients',  'numbers',  'president',  'all',  'number',  'politicians',  'chinese',  'info',  'flu',  'spread',  'case',  'ban',  'rules',  'everything',  'something',  'discussions',  'facebook',  'someone',  'lot',  'south korea',  'professionals',  'state',  'highlights',  'accusations',  'discretion',  'offences',  'attacks',  'repeat offenders',  'pages',  'support resources',  'daily discussion thread',  'advice.',  'giving',  'anyone',  'anything',  'work',  'americans',  'measures',  'hospitals',  'death',  'person',  'point',  'risk',  'nothing',  'europe',  'united states',  'wuhan',  'money',  'italian',  'doctors',  'quarantine',  'population',  'state of emergency',  'test',  'distancing',  'man',  'information',  'article',  'outbreak',  'situation',  'children',  'reason',  'school',  'lockdown',  'source',  'times',  'response',  'restaurants',  'thousands',  'supplies',  'others',  'bars',  'no one',  'kids',  'life',  'area',  'vaccine',  'shit',  'america',  '1 million',  'coronavirus test',  'infections',  'news',  'gatherings',  'herd immunity',  'total',  'france',  'job',  'officials',  'post',  'employees',  'four',  'emergency',  'states',  'coronavirus cases',  'corona',  'experts',  'scientists',  'hands',  'events',  'germany',  'some',  'travel ban',  'link',  'friends',  'british',  'ohio',  'australia',  'disease',  'idea',  'food',  'india',  'nyc',  'many',  'contact',  'wife',  'staff',  'family',  'part',  'more',  'lives',  'spain',  'who',  'crisis',  'place',  'posts',  'nba',  'test kits',  'thanks',  'american',  'flight',  'doctor',  'rome',  'community',  'house',  'economy',  'boomers',  'zero',  'fact',  'order',  'guy',  'icu',  'curve',  'problem',  'sense'
 ```
@@ -548,12 +548,12 @@ Po obdelavi dobimo naslednjo podatkovno množico:
 
 
 ## Priprava podatkov
-Redditov lastni API, ki ponuja poleg agregiranih statistik, tudi moznost pridobivanja vsebin tako-imenovanih 'submission'-ov ter komentarjev. Podatki so skonstruirani na naslednji naćin:
+Redditov lastni API, ki ponuja poleg agregiranih statistik, tudi možnost pridobivanja vsebin tako-imenovanih 'submission'-ov ter komentarjev. Podatki so skonstruirani na naslednji način:
 
 Datum, Ocena Komentarja, Ocena Submmissiona, Naslov Submissiona, Text Komentarja
 
 Po zgornjem formatu imamo trenutno podatke od 16. marca do 27. januarja tega leta. 
-Naslednji odsek kode je bil uporabljen za zgradbo te množice, veliko je olajšal delo modul psaw:
+Naslednji odsek kode je bil uporabljen za zgradbo te množice, veliko je precej olajšala uporaba modula psaw:
 ```Python
 from psaw import PushshiftAPI
 import datetime as dt
@@ -587,28 +587,31 @@ while( before>start_epoch ):
 # Twitter
 ## Analiza podatkov o Tweetih iz strani Kaggle
 
-Medtem ko se pripravlja naša baza z Tweeti od 1.1.2020 do 16.3.2020, ki vsebuje vzorec šest tisočih Tweetov iz vsakega dneva, ki omenjajo Koronavirus. Za sprotno poročilo smo se odločili da naredimo hitro analizo na tovrstnih podatkih iz Kaggla, ki jih nato lahko uporabimo za primerjavo kasneje z našimi podatki. V ta namen smo Kagglovo bazo pretvorili v format, ki smo ga izbrali tudi mi za našo bazo: Datum - Lokacija - Tweet - Število všečkov - Število retweetov. Odločili smo se, da nad temi podatki naredimo hitro analizo, tako da imamo neko primerjavo z našimi podatki, kot da dobimo in se seznanimo z vrsto podatkov. Kaggle baza je sicer zgolj za marec, od prvega do dvaindvajsetega, vzeli smo pa prav tako vzorec prvih 6000 Tweetov iz vsake csv datoteke, kjer smo za prvo izbrali 6000 za vsak dan in dobili 114000 tweetov velik vzorec.
+Medtem ko se pripravlja naša baza, bomo uporabili podatke o Tweetih is Kaggla. V naši bazi bomo zbrali Tweete od 1.1.2020 do 16.3.2020. Za vsak dan zbiramo šest tisoč Tweetov, ki omenjajo Koronavirus. 
+Za sprotno poročilo smo se odločili da naredimo hitro analizo na podobnih podatkih iz Kaggla, ki jih nato lahko uporabimo za primerjavo z našimi podatki, ko bodo na voljo. V ta namen smo Kagglovo bazo pretvorili v format, ki smo ga izbrali za našo bazo: 
+Datum - Lokacija - Tweet - Število všečkov - Število retweetov. 
+Za enkrat bodo te podatki služili kot vzorec, da se seznanimo z vrsto podatkov ter lahko z njimi delamo, dokler pripravljamo svojo bazo. Kaggle baza sicer vsebuje podatke zgolj od 1. do 22. marca, vzeli smo vzorec prvih 6000 za vsak dan in dobili 114000 tweetov velik vzorec.
 
 ## Pregled osnovnih statističnih podatkov
 
 Najbolj osnovna statistika, ki jo lahko pregledamo je povprečno število všečkov in retweetov na tweet, ter povprečni standardni odklon le teh.
-Dobimo rezultate da je povprečje všečkov na tweet 15391.429 s standardnim odklonom 43243.936, za retweet-e pa dobimo rezultate da je povprečnje na tweet 5.115 s standardnim odklonom 138.549. Iz tega vidimo da je pri obeh velik standardni odklon. Seveda je to tudi nekako pričakovano saj imajo različni računi različno število sledilcev in posledično različno "prometa", ki gre čez njihov račun. Lahko razberemo, da je takih, ki imajo manj sledilcev veliko več kot pa teh z velikim številom le teh. Takih podatkov kot je število sledilcev, ali je račun potrjen itd. v naši bazi ne bomo imeli, je pa zanimivo razmisliti kako vplivajo na podatke.
+Dobimo rezultate da je povprečje všečkov na tweet 15391.429 s standardnim odklonom 43243.936, za retweet-e pa dobimo rezultate da je povprečnje na tweet 5.115 s standardnim odklonom 138.549. Iz tega vidimo da je pri obeh velik standardni odklon. Seveda je to pričakovano saj imajo različni računi različno število sledilcev in posledično različno "prometa", ki gre čez njihov račun. Lahko razberemo, da je takih, ki imajo manj sledilcev veliko več kot pa teh z velikim številom. To na nek način potrdi našo izbiro vzorca, saj vemo, da je število sledilcev na Twitterju sledi Paretovi distribuciji. Sicer podatkov kot je število sledilcev, ali je račun potrjen itd. v naši bazi ne bomo imeli, je pa zanimivo razmisliti kako vplivajo na podatke.
 
-Podatke lahko predstavimo kot da gre za normalno porazdelitev. Če to storimo lahko bodimo nasledne grafe.
+Podatke lahko predstavimo, kot da gre za normalno porazdelitev. Če to storimo lahko bodimo nasledne grafe.
 ![3graphs.png](./images/3graphs.png)
 Vidimo da število tweetov glede na število všečkov, praktično logaritmično pada z večjim število všečkov. To je uvidno tako v tweetih, ki imajo okoli 4000 všečkovi in manj (zeleni graf) kot na tistih, ki imajo okoli 40000 všečkov in manj (modri graf). Pri vseh treh percentilih za katere smo naredili graf po normalni porazdelitvi, torej 75-percentil, 50-percentil in 40-percentil, se opazi enak vzorec padanja števila tweetov z večjih številom všečkov. 
 
-Zanima nas tudi število všečkov in retweetov glede na posamezni dan, tako lahko nekako vidimo kako je potek "promet".
+Zanima nas tudi število všečkov in retweetov glede na posamezni dan, tako lahko nekako vidimo kako je potekal "promet".
 ![promet.png](./images/promet.png)
-Če "promet" po določenem dnevu opredelimo kot seštevek všečkov in retweetov, vidimo da je bilo največ prometa okoli desetega ali pa enajstega marca. Ker bodo te dnevi prisotni tudi v naši bazi, bomo lahko na podlagi tega naredili primerjave med načinon zajemanja podatkov, ki smo ga uporabili mi, in tem, ki so ga uporabili za Kaggle baze.
+Če promet po določenem dnevu opredelimo kot seštevek všečkov in retweetov, vidimo da je bilo največ prometa okoli desetega ali pa enajstega marca. Ker bodo te dnevi prisotni tudi v naši bazi, bomo lahko na podlagi tega naredili primerjave med načinon zajemanja podatkov, ki smo ga uporabili mi, in tem, ki so ga uporabili za Kaggle baze.
 
 Ker bomo v naših podatkih pregledovali tudi tweete glede na lokacije, nas zanima, kako so loakcije razporejene v Kaggle bazah. Kar nam vrne spodnji graf.
 ![locations.png](./images/locations.png)
 Iz vseh 114000 tweetov, ki smo jih vzeli za vzorec, jih je le 5976 imelo navedeno lokacijo. Izmed teh 5976 tweetov dobimo 111 različnih držav. Te smo za potrebe grafa omejili na tiste, ki so imeli več kot 30 tweetov v obdobju od prvega do dvaindvajsetega marca. Izkaže se da je takih le 24. Izmed teh 24 se vidi da Amerika množično prevladuje, sledita ji še Kanda in Velika Britanija, torej še dve angleško govoreči državi, ampak Ameriki nista blizu. To je podatek, ki ga bomo tudi mi lahko spremljaji v naši bazi, in ga primerjali s podatki, ki smo jih dobili iz Kaggle-ove baze. 
 
-Za zaključek, lahko te podatke še simplistično pregledamo na podlagi vsebine samega tweeta. Zanima nas naprimer koliko ljudje govorijo o obolelih, o novih primerih, o smrtih in ozdravelih. Iz teh podatkov dobimo nasledni graf. 
+Za zaključek, lahko te podatke še simplistično pregledamo na podlagi vsebine samega tweeta. Zanima nas naprimer koliko ljudje govorijo o obolelih, o novih primerih, o smrtih in ozdravelih.
 ![words.png](./images/words.png)
-Iz njega lahko vidimo da jih največ (po našem zelo omejenem iskanju) govori o teh, ki so ozdraveli, temu pa sledijo tweeti, ki vsebujejo besedo death. Z hitrim pogledom v podatke vidimo, da gre pri teh tweetih dejansko za avtomatiziran profil, ki objavlja statusne spremembe.
+Iz zgornjega prikaza lahko vidimo da jih največ (po našem zelo omejenem iskanju) govori o teh, ki so ozdraveli, temu pa sledijo tweeti, ki vsebujejo besedo death. Z hitrim pogledom v podatke vidimo, da gre dejansko za avtomatiziran profil, ki objavlja statusne spremembe.
 
 ## Priprava naše podatkovne baze
 Našo podatkovno bazo bomo pripravili z pomočjo twitter scrapperja in ne direktno z uporabo Twitter API. Uporabili bomo twint, GitHub modul, ki je namenjen javni uporabi. Ima opcijo iskanja tako po besedah kot po uporabnikih. Koda za samo proces pridobivanja podatkov je bila sledeča:
@@ -626,24 +629,13 @@ c.Limit = 6000
 c.Store_csv = True
 twint.run.Search(c)
 ```
-Kodo smo pognali za vsak dan posebaj do 15.3.2020, tako da smo dobili vzorec 6000 tweetov dnevno. To pa za potrebe naše analize ni zadostovalo saj ne vsebuje lokacije. Na srečo nam pa twint omogoča pogledati lokacijo uporabnika, ki je objavil tweet. 
+Kodo smo pognali za vsak dan od 1.1.2020 do 15.3.2020, tako da smo dobili vzorec 6000 tweetov dnevno. To pa za potrebe naše analize ni zadostovalo saj ne vsebuje lokacije. Na srečo nam pa twint omogoča pogledati lokacijo uporabnika, ki je objavil tweet. 
 
 Ko smo enkrat imeli vse tweete za našo bazo smo morali dati vse še čez program, ki je za vsak tweet pogledal njegovo lokacijo. To smo zapisali v txt datoteko, nato pa iz nje prebrali to vrednost in jo shraili v csv, katerega bomo kasneje uporabili za analizo vseh podatkov. Ker je nekaj uporabnikov, ki imajo za lokacijo podano nekaj kar ni realna geografska lokacija, bomo ob končanem preračunavanju lokacij, morali še pregledati katere lokacije so pravilne. To lahko storimo z python modulom GeoPy, ki nam ne bo vrnil vrednosti, če lokacija ne bo pravilna. S pomočjo tega bomo nato lahko izvedli analizo nad podatki glede na države.
 
 # Gtrends
 
-Google trends je spletna stran kjer Google objavlja podatke o najbolj iskanih izrazih in omogoča iskanje podatkov o iskanosti posameznih izrazov glede na čas, regije, province, mesta in države. Vrednost iskanosti je normalizirana na vrednost od 0 do 100 glede na delež vseh iskanj pri danih pogojih in predstavlja relativno popularnosti iskanosti izraza. Enaka vrednost pri isti pogojih za dve različni državi to ne pomeni enako število iskanj. Google trends malo iskane izraze označi z 0, tiste z posebnimi znaki (npr apostrofi= in tiste, ki jih uporabnik v kratkem času velikokrat ponovi pa ne upošteva. Za to spletno stran obstaja API Pytrends, ki z pythonom omogoči avtomatizacijo poizvedb. Ker ima tudi arhiv popularnosti poizvedb sem spisal program, ki za vsak dan od 1.1.2020 do izbranega datuma najde popularnost poizvedb za vse države in teritorije sveta in jih spravi v pandas dataframe, ter ga združi z tabelami prejšnjih dni.Zbrane podatke zapiše v CSV datoteko.
-## Natural Language Processing
-
-Odločili smo se, da bomo uporabljali podatke iz 2 socialnih omrežij, Twitterja in Reddita.
-Najprej smo zbrali podatke iz omrežja Reddit. Odločili smo se da bomo preučili vsebino posameznih objav. Izbrali smo si analizo ključnih besed ter ocenjevanje razpoloženja. Ker nismo imeli dostopa do dobrih učnih podatkov, dovolj znanja in časa, da bi sami implementirali zgoraj omenjeni metodi, smo poiskali rešitve, ki že obstajajo. 
-Najprej smo si izbrali Googlovo storitev [Natural Language Procesing](https://cloud.google.com/natural-language/docs/), narejeno za razpoznavanje razpoloženja generičnih dokumentov ter iskanja njihovih ključnih besed. To je ustrezalo našim kriterijem, vendar smo ugotovili, da bo cena uporabe API-ja višja kot smo si predstavljali in smo zato morali po 10000 klicih poiskati alternativo. 
-[stara skripta](/old_nlp/NLP_script.py), [ključne besede](./nlp/old_nlp/old_entities.json), [sentiment](/old_nlp/old_nlp.csv)
-Hoteli smo poiskati rešitev, ki nam bi vračala podobne rezultate, saj smo bili z trenutnimi precej zadovoljni. Tako smo našli [Text Analysis Endpoint na RapidAPI](https://rapidapi.com/aylien/api/text-analysis?endpoint=53aa5a0ee4b0f2c975470d76).
-Izkazalo se je, da je to še bolj primerno za naše podatke, saj je bil model natreniran na podlagi tweetov, ki so vsebinsko precej podobni objavam na Redditu, druga polovica naših podatkov pa bodo tweeti. 
-[skripta](./nlp/nlp.py), [ključne besede](./nlp/entities.json), [sentiment](./nlp/nlp.csv), 
-Z uporabo novega API-ja smo seveda naleteli na težavo kako podatke združiti. Prvotni je vračal vrednosti razpoloženja (sentiment) kot zvezne spremenljivko na interval [-1, 1] trenutni pa kot nominalno z vrednostmi {positive, neutral in negative}. Tako smo se odložili, da bomo prvotne podatke preslikali v nove vrednosti torej [-1, -0.33] negative, (-0.33, 0.33) neutral ter [0.33, 1] positive. Na srečo so bile ključne besede v enakem formatu ter smo jih lahko brez težav združili. [skripta za zrduževanje](./nlp/old_nlp/format.py)
-
+Google trends je spletna stran kjer Google objavlja podatke o najbolj iskanih izrazih in omogoča iskanje podatkov o iskanosti posameznih izrazov glede na čas, regije, province, mesta in države. Vrednost iskanosti je normalizirana na vrednost od 0 do 100 glede na delež vseh iskanj pri danih pogojih in predstavlja relativno popularnosti iskanosti izraza. Enaka vrednost pri isti pogojih za dve različni državi to ne pomeni enako število iskanj. Google trends malo iskane izraze označi z 0, tiste z posebnimi znaki (npr apostrofi= in tiste, ki jih uporabnik v kratkem času velikokrat ponovi pa ne upošteva. Za to spletno stran obstaja API Pytrends, ki z pythonom omogoči avtomatizacijo poizvedb. Ker ima tudi arhiv popularnosti poizvedb sem spisal program, ki za vsak dan od 1.1.2020 do izbranega datuma najde popularnost poizvedb za vse države in teritorije sveta in jih spravi v pandas dataframe, ter ga združi z tabelami prejšnjih dni. Zbrane podatke zapiše v CSV datoteko.
 
 # Vizualization
 
@@ -660,7 +652,7 @@ from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 ```
 
 ### Prikaz širjenja COVID-19
-Uporabili smo dataset iz Kaggle, ki vsebuje podatke do 3.31.2020. Kasneje bomo seveda uporabili novejši dataset. Želimo primerjati dejansko širjenje COVID-19 ter kako se je širila panika po socialnih omrežjih.
+Uporabili smo dataset iz Kaggle, ki vsebuje podatke do 3.31.2020. Kasneje bomo seveda uporabili svoje podatke. Želimo primerjati dejansko širjenje COVID-19 s širjenjem panike na socialnih omrežjih.
 
 
 ```python
